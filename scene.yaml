@@ -29,10 +29,28 @@ lights:
         specular: .5
         visible: false
 styles:
+    # Shaders Demo
     windows:
         url: styles/windows.yaml
-
+    # Tilt Demo
+    geometry-tilt:
+        url: styles/geometry-tilt.yaml
+    geometry-normal:
+        url: styles/geometry-normal.yaml
+    generative-random:
+        url: styles/generative-random.yaml
+    generative-noise:
+        url: styles/generative-noise.yaml
+    generative-fbm:
+        url: styles/generative-fbm.yaml
+    filter-grain:
+        url: styles/filter-grain.yaml
     buildings:
+        url: styles/buildings.yaml
+    offices:
+        url: styles/offices.yaml
+
+    basic-buildings:
         base: polygons
         shaders:
             blocks:
@@ -58,36 +76,47 @@ layers:
         extruded:
             draw:
                 polygons:
-                    style: buildings
+                    style: basic-buildings
                     extrude: function () { return feature.slr > 0 || $zoom >= 16; }
                     
     buildings:
         data: { source: osm }
-        draw:
-            polygons:
-                order: function() { return feature.sort_key; }
-                color: [.6, .6, .6]
-                style: windows
-                # at z15, only extrude buildings over 2 m; at z16 and higher, extrude all buildings
-                extrude: function () { return (($zoom >= 15 && feature.height > 2) || $zoom >= 16) }
-        # buildings with a name only
-        namedBuildings:
-            filter: { name: true }
+        filter: { $zoom: { min: 10 } }
+        offices:
+            filter: function(){ return feature.height > 100; }
             draw:
                 polygons:
+                    style: offices
+                    extrude: true
+                    order: 4
+                    color: '#999'
+    #buildings:
+     #   data: { source: osm }
+      #  draw:
+       #     polygons:
+        #        order: function() { return feature.sort_key; }
+         #       color: [.6, .6, .6]
+          #      style: windows
+                # at z15, only extrude buildings over 2 m; at z16 and higher, extrude all buildings
+           #     extrude: function () { return (($zoom >= 15 && feature.height > 2) || $zoom >= 16) }
+        # buildings with a name only
+        #namedBuildings:
+         #   filter: { name: true }
+          #  draw:
+           #     polygons:
                     color: [.6, .2, .2]
             # buildings with a name and a kind
-            namedKindBuildings:
-                filter: { kind: true }
-                draw:
-                    polygons:
-                        color: [.6, .2, .6]
+            #namedKindBuildings:
+             #   filter: { kind: true }
+              #  draw:
+               #     polygons:
+                #        color: [.6, .2, .6]
         # buildings with a kind only
-        kindBuildings:
-            filter: { name: false, kind: true }
-            draw:
-                polygons:
-                    color: [.2, .2, .6]
+        #kindBuildings:
+         #   filter: { name: false, kind: true }
+          #  draw:
+           #     polygons:
+            #        color: [.2, .2, .6]
                     
     earth:
         data: 
