@@ -43,8 +43,17 @@
    url: 'http://maps5.arcgisonline.com/ArcGIS/rest/services/review/Woods_Hole_US_Biomass/MapServer/5',
    opacity: 0.8
   }).addTo(map);
-  
 </script>
 
+  <!-- Mapzen map UI -->
+  <script src='//mapzen.com/common/ui/mapzen-ui.min.js'></script>
+  <script>
+    MPZN.bug({
+      name: 'Tangram',
+      link: 'https://mapzen.com/projects/tangram',
+      tweet: 'Tangram: real-time WebGL maps from @mapzen',
+      repo: 'https://github.com/tangrams/tangram'
+    });
+    </script>
 </body>
 </html>
