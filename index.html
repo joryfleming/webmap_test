@@ -39,12 +39,6 @@
       opacity: 0.7
     });
 
-    var biomass = L.esri.dynamicMapLayer({
-      url: 'http://maps5.arcgisonline.com/ArcGIS/rest/services/review/Woods_Hole_US_Biomass/MapServer/5',
-      opacity: 0.8
-    });
-  
-
     var map = L.map('map'),{
       center: [42.364423, -71.055261], 
       zoom: 16,
@@ -57,7 +51,6 @@
   
     var overlayMaps = {
       "Sea Level Rise 6ft": slr
-      "Woods Hold Biomass": biomass
     };
   
     L.control.layers(baseMaps, overlayMaps).addTo(map);
