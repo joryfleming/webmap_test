@@ -13,6 +13,7 @@ lights:
         direction: [-.2, 1, -.1]
         diffuse: 1
         ambient: .6
+        visible: true
     directional1:
         type: directional
         direction: [0.293,-0.861,-0.415]
@@ -95,11 +96,11 @@ layers:
                 polygons:
                     color: [.6, .2, .2]
              #buildings with a name and a kind
-        namedKindBuildings:
-            filter: { kind: true }
-            draw:
-                polygons:
-                    color: [.6, .2, .6]
+            namedKindBuildings:
+                filter: { kind: true }
+                draw:
+                    polygons:
+                        color: [.6, .2, .6]
          #buildings with a kind only
         kindBuildings:
             filter: { name: false, kind: true }
