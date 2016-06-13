@@ -67,19 +67,6 @@ sources:
         url: http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer
 
 layers:
-    slr:
-        data: { source: NOAA }
-        draw:
-            polygons:
-                order: function() { return feature.sort_key; }
-                color: '#3333ff'
-
-        extruded:
-            draw:
-                polygons:
-                    style: basic-buildings
-                    extrude: function () { return feature.slr > 0 || $zoom >= 16; }
-           
     buildings:
         data: { source: osm }
         draw:
