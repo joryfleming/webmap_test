@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"></script>
   
   <!-- Main tangram library -->
-    <script src="https://mapzen.com/tangram/0.4/tangram.min.js"></script>
+  <script src="https://mapzen.com/tangram/0.4/tangram.min.js"></script>
 
   <style>
     body { margin:0; padding:0; }
@@ -28,6 +28,11 @@
 
 <script>
   var map = L.map('map').setView([42.3133, -71.1567], 9);
+  
+  var layer = Tangram.leafletLayer({
+    scene: 'scene.yaml',
+    attribution: '<a href="https://mapzen.com/tangram" target="_blank">Tangram</a> | &copy; OSM contributors | <a href="https://mapzen.com/" target="_blank">Mapzen</a>'
+  }).addTo(map);
 
   L.esri.dynamicMapLayer({
     url: 'http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer',
@@ -37,11 +42,6 @@
   L.esri.dynamicMapLayer({
    url: 'http://maps5.arcgisonline.com/ArcGIS/rest/services/review/Woods_Hole_US_Biomass/MapServer/5',
    opacity: 0.8
-  }).addTo(map);
-
-  var layer = Tangram.leafletLayer({
-    scene: 'scene.yaml',
-    attribution: '<a href="https://mapzen.com/tangram" target="_blank">Tangram</a> | &copy; OSM contributors | <a href="https://mapzen.com/" target="_blank">Mapzen</a>'
   }).addTo(map);
   
 </script>
