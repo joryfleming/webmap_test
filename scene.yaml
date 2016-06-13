@@ -155,6 +155,7 @@ layers:
             polygons:
                 order: function() { return feature.sort_key; }
                 color: [.6, .6, .6]
+                style: windows
                 # at z15, only extrude buildings over 5 m; at z16 and higher, extrude all buildings
                 extrude: function () { return (($zoom >= 15 && feature.height > 5) || $zoom >= 16) }
         # buildings with a name only
