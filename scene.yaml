@@ -20,8 +20,24 @@ sources:
         type: TopoJSON
         url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-rKpnpkD
         max_zoom: 16
+    NOAA:
+        type: GeoJSON
+        url: http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer
 
 layers:
+    slr:
+        data: { source: NOAA }
+        draw:
+            polygons:
+                order: function() { return feature.sort_key; }
+                color: '#3333ff'
+
+        extruded:
+            draw:
+                polygons:
+                    style: buildings
+                    extrude: function () { return feature.slr > 0 || $zoom >= 16; }
+                    
     earth:
         data: { source: osm }
         draw:
