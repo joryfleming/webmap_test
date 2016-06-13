@@ -1,0 +1,13 @@
+buildings:
+  texcoords: true
+  base: polygons
+  mix: [functions-map, geometry-tilt, geometry-normal, filter-grain]
+  material:
+      shininess: 2.
+      specular: 1.0
+      ambient: [0.000, 0.000, 0.000]
+      emission: 0.0
+  shaders:
+      blocks:
+          filter: |
+              color.rgb += vec3(1.0)* min( 1.-(worldPosition().z*.001 + .7) , 0.5 );
