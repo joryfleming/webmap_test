@@ -86,3 +86,27 @@ layers:
                     style: buildings
                     extrude: function () { return feature.height > 0 || $zoom >= 16; }
 
+    road_labels:
+        data: { source: osm, layer: roads }
+        filter: { name: true, aeroway: false, tunnel: false, railway: false, not: { kind: [rail, ferry] } }
+
+        highway:
+            filter: { kind: highway, $zoom: { min: 7 } }
+            draw:
+                text:
+                    order: function() { return feature.sort_key; }
+                    font:
+                        fill: black
+                        weight: 500
+                        size: 12px
+                        family: Helvetica
+        not_highway:
+            filter: { not: { kind: highway }, $zoom: { min: 15 } }
+            draw:
+                text:
+                    order: function() { return feature.sort_key; }
+                    font:
+                        fill: black
+                        weight: 100
+                        size: 11px
+                        family: Helvetica
