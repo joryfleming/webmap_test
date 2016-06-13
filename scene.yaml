@@ -79,15 +79,15 @@ layers:
                     style: basic-buildings
                     extrude: function () { return feature.slr > 0 || $zoom >= 16; }
     buildings:
-        data: { source: osm }
-        filter: { $zoom: { min: 10 } }
-        offices:
-            draw:
-                polygons:
-                    style: offices
-                    extrude: true
-                    order: 4
-                    color: '#999'                
+        data: 
+            source: osm
+            layer: buildings
+        draw:
+            polygons:
+                style: offices
+                extrude: true
+                order: 4
+                color: '#999'                
     #buildings:
      #   data: { source: osm }
       #  draw:
