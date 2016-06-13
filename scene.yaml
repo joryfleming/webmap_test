@@ -3,7 +3,7 @@ cameras:
         type: perspective
         focal_length: 1
         # focal_length: [[16, 2], [17, 2.5], [18, 3], [19, 4], [20, 6]] # pairs of [zoom, focal len]
-        vanishing_point: [-250, -250] # relative to center of screen, in pixels
+        vanishing_point: [0, -1000] # relative to center of screen, in pixels
     #isometric:
     #    type: isometric
     #    axis: [0,1]
@@ -13,6 +13,21 @@ lights:
         direction: [-.2, 1, -.1]
         diffuse: 1
         ambient: .6
+    directional1:
+        type: directional
+        direction: [0.293,-0.861,-0.415]
+        ambient: .5
+        diffuse: .9
+        specular: 1.
+        visible: false
+    point1:
+        type: point
+        position: [0, -100, 0px]
+        origin: ground
+        ambient: .2
+        diffuse: .2
+        specular: .5
+        visible: false
 styles:
     windows:
         url: styles/windows.yaml
