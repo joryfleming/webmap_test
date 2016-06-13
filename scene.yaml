@@ -1,21 +1,43 @@
 cameras:
     camera1:
-        type: perspective
+        type: isometric
 
 lights:
     light1:
         type: directional
         direction: [0, 1, -.5]
-        diffuse: .3
-        ambient: 1
-
+        diffuse: .7
+        ambient: .5
+styles:
+    buildings:
+        base: polygons
+        shaders:
+            blocks:
+                color: |
+                    color.rgb *= vec3(min((v_world_position.z*.001 + .6),1.));
 sources:
     osm:
         type: TopoJSON
         url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-rKpnpkD
         max_zoom: 16
+    NOAA:
+        type: GeoJSON
+        url: http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer
 
 layers:
+    slr:
+        data: { source: NOAA }
+        draw:
+            polygons:
+                order: function() { return feature.sort_key; }
+                color: '#3333ff'
+
+        extruded:
+            draw:
+                polygons:
+                    style: buildings
+                    extrude: function () { return feature.slr > 0 || $zoom >= 16; }
+                    
     earth:
         data: { source: osm }
         draw:
@@ -72,15 +94,35 @@ layers:
         draw:
             polygons:
                 order: function() { return feature.sort_key; }
-                color: |
-                    function () {
-                        var h = feature.height || 20;
-                        h = Math.min((h + 50)/ 255, .8); // max brightness: .8
-                        h = Math.max(h, .4); // min brightness: .4
-                        return [h, h, h];
-                    }
-        3d-buildings:
-            filter: { $zoom: { min: 15 } }
+                color: '#fff'
+
+        extruded:
             draw:
                 polygons:
-                    extrude: function () { return feature.height > 20 || $zoom >= 16; }
+                    style: buildings
+                    extrude: function () { return feature.height > 0 || $zoom >= 16; }
+
+    road_labels:
+        data: { source: osm, layer: roads }
+        filter: { name: true, aeroway: false, tunnel: false, railway: false, not: { kind: [rail, ferry] } }
+
+        highway:
+            filter: { kind: highway, $zoom: { min: 7 } }
+            draw:
+                text:
+                    order: function() { return feature.sort_key; }
+                    font:
+                        fill: black
+                        weight: 500
+                        size: 12px
+                        family: Helvetica
+        not_highway:
+            filter: { not: { kind: highway }, $zoom: { min: 15 } }
+            draw:
+                text:
+                    order: function() { return feature.sort_key; }
+                    font:
+                        fill: black
+                        weight: 100
+                        size: 11px
+                        family: Helvetica
