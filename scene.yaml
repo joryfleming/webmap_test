@@ -33,24 +33,7 @@ styles:
     # Shaders Demo
     windows:
         url: styles/windows.yaml
-    # Tilt Demo
-    geometry-tilt:
-        url: styles/geometry-tilt.yaml
-    geometry-normal:
-        url: styles/geometry-normal.yaml
-    generative-random:
-        url: styles/generative-random.yaml
-    generative-noise:
-        url: styles/generative-noise.yaml
-    generative-fbm:
-        url: styles/generative-fbm.yaml
-    filter-grain:
-        url: styles/filter-grain.yaml
-    buildings:
-        url: styles/buildings.yaml
-    offices:
-        url: styles/offices.yaml
-
+   
     basic-buildings:
         base: polygons
         shaders:
