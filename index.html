@@ -1,0 +1,45 @@
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>SLR Testing</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!-- Load Leaflet from CDN-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"></script>
+
+  <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<! -- Add ESRI basemap, SLR Vector data from OCM ArcGIS Server, Woods Hole Biomass Dataset -->
+<! -- http://www.arcgis.com/home/item.html?id=788d82b22856444cb0ae04050f83e64f -->
+
+<script>
+  var map = L.map('map').setView([42.3133, -71.1567], 9);
+
+  L.esri.basemapLayer('Gray').addTo(map);
+
+  L.esri.dynamicMapLayer({
+    url: 'http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer',
+    opacity: 0.5
+  }).addTo(map);
+
+  L.esri.dynamicMapLayer({
+   url: 'http://maps5.arcgisonline.com/ArcGIS/rest/services/review/Woods_Hole_US_Biomass/MapServer/5',
+   opacity: 0.8
+  }).addTo(map);
+
+  
+</script>
+
+</body>
+</html>
