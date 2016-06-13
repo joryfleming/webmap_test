@@ -13,6 +13,7 @@ lights:
         direction: [-.2, 1, -.1]
         diffuse: 1
         ambient: .6
+        visible: true
     directional1:
         type: directional
         direction: [0.293,-0.861,-0.415]
@@ -29,10 +30,28 @@ lights:
         specular: .5
         visible: false
 styles:
+    # Shaders Demo
     windows:
         url: styles/windows.yaml
-
+    # Tilt Demo
+    geometry-tilt:
+        url: styles/geometry-tilt.yaml
+    geometry-normal:
+        url: styles/geometry-normal.yaml
+    generative-random:
+        url: styles/generative-random.yaml
+    generative-noise:
+        url: styles/generative-noise.yaml
+    generative-fbm:
+        url: styles/generative-fbm.yaml
+    filter-grain:
+        url: styles/filter-grain.yaml
     buildings:
+        url: styles/buildings.yaml
+    offices:
+        url: styles/offices.yaml
+
+    basic-buildings:
         base: polygons
         shaders:
             blocks:
@@ -58,9 +77,9 @@ layers:
         extruded:
             draw:
                 polygons:
-                    style: buildings
+                    style: basic-buildings
                     extrude: function () { return feature.slr > 0 || $zoom >= 16; }
-                    
+           
     buildings:
         data: { source: osm }
         draw:
@@ -76,13 +95,13 @@ layers:
             draw:
                 polygons:
                     color: [.6, .2, .2]
-            # buildings with a name and a kind
+             #buildings with a name and a kind
             namedKindBuildings:
                 filter: { kind: true }
                 draw:
                     polygons:
                         color: [.6, .2, .6]
-        # buildings with a kind only
+         #buildings with a kind only
         kindBuildings:
             filter: { name: false, kind: true }
             draw:
