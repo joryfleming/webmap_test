@@ -2,11 +2,12 @@ cameras:
     perspective:
         type: perspective
         # focal_length: 1
-        focal_length: [[16, 2], [17, 2.5], [18, 3], [19, 4], [20, 6]] # pairs of [zoom, focal len]
+        # focal_length: [[16, 2], [17, 2.5], [18, 3], [19, 4], [20, 6]] # pairs of [zoom, focal len]
         vanishing_point: [-250, -250] # relative to center of screen, in pixels
-    isometric:
-        type: isometric
-        axis: [0,1]
+        fov: 80
+    #isometric:
+    #    type: isometric
+    #    axis: [0,1]
 lights:
     key:
         type: directional
@@ -45,6 +46,34 @@ layers:
                 polygons:
                     style: buildings
                     extrude: function () { return feature.slr > 0 || $zoom >= 16; }
+                    
+    buildings:
+        data: { source: osm }
+        draw:
+            polygons:
+                order: function() { return feature.sort_key; }
+                color: [.6, .6, .6]
+                style: windows
+                # at z15, only extrude buildings over 2 m; at z16 and higher, extrude all buildings
+                extrude: function () { return (($zoom >= 15 && feature.height > 2) || $zoom >= 16) }
+        # buildings with a name only
+        namedBuildings:
+            filter: { name: true }
+            draw:
+                polygons:
+                    color: [.6, .2, .2]
+            # buildings with a name and a kind
+            namedKindBuildings:
+                filter: { kind: true }
+                draw:
+                    polygons:
+                        color: [.6, .2, .6]
+        # buildings with a kind only
+        kindBuildings:
+            filter: { name: false, kind: true }
+            draw:
+                polygons:
+                    color: [.2, .2, .6]
                     
     earth:
         data: 
@@ -148,34 +177,6 @@ layers:
                         order: 352 # magic number
                         width: .5
 
-
-    buildings:
-        data: { source: osm }
-        draw:
-            polygons:
-                order: function() { return feature.sort_key; }
-                color: [.6, .6, .6]
-                style: windows
-                # at z15, only extrude buildings over 5 m; at z16 and higher, extrude all buildings
-                extrude: function () { return (($zoom >= 15 && feature.height > 5) || $zoom >= 16) }
-        # buildings with a name only
-        namedBuildings:
-            filter: { name: true }
-            draw:
-                polygons:
-                    color: [.6, .2, .2]
-            # buildings with a name and a kind
-            namedKindBuildings:
-                filter: { kind: true }
-                draw:
-                    polygons:
-                        color: [.6, .2, .6]
-        # buildings with a kind only
-        kindBuildings:
-            filter: { name: false, kind: true }
-            draw:
-                polygons:
-                    color: [.2, .2, .6]
     road_labels:
         data: { source: osm, layer: roads }
         filter: { name: true, aeroway: false, tunnel: false, railway: false, not: { kind: [rail, ferry] } }
