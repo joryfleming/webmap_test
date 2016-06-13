@@ -4,9 +4,9 @@ cameras:
         focal_length: 25
         # focal_length: [[16, 2], [17, 2.5], [18, 3], [19, 4], [20, 6]] # pairs of [zoom, focal len]
         # vanishing_point: [-250, -250] # relative to center of screen, in pixels
-    #isometric:
-    #    type: isometric
-    #    axis: [0,1]
+    isometric:
+        type: isometric
+        axis: [0,1]
 lights:
     key:
         type: directional
@@ -53,8 +53,8 @@ layers:
                 order: function() { return feature.sort_key; }
                 color: [.6, .6, .6]
                 style: windows
-                # at z14, only extrude buildings over 2 m; at z16 and higher, extrude all buildings
-                extrude: function () { return (($zoom >= 14 && feature.height > 2) || $zoom >= 16) }
+                # at z14, only extrude buildings over 5 m; at z16 and higher, extrude all buildings
+                extrude: function () { return (($zoom >= 14 && feature.height > 5) || $zoom >= 16) }
         # buildings with a name only
         namedBuildings:
             filter: { name: true }
