@@ -31,6 +31,9 @@ lights:
 styles:
     windows:
         url: styles/windows.yaml
+        
+    tilt:
+        url: styles/tilt.yaml
 
     buildings:
         base: polygons
