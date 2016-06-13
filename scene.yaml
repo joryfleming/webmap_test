@@ -1,14 +1,22 @@
 cameras:
-    camera1:
+    perspective:
+        type: perspective
+        # focal_length: 1
+        focal_length: [[16, 2], [17, 2.5], [18, 3], [19, 4], [20, 6]] # pairs of [zoom, focal len]
+        vanishing_point: [-250, -250] # relative to center of screen, in pixels
+    isometric:
         type: isometric
-
+        axis: [0,1]
 lights:
-    light1:
+    key:
         type: directional
-        direction: [0, 1, -.5]
-        diffuse: .7
-        ambient: .5
+        direction: [-.2, 1, -.1]
+        diffuse: 1
+        ambient: .6
 styles:
+    windows:
+        url: styles/windows.yaml
+
     buildings:
         base: polygons
         shaders:
@@ -39,69 +47,134 @@ layers:
                     extrude: function () { return feature.slr > 0 || $zoom >= 16; }
                     
     earth:
-        data: { source: osm }
+        data: 
+            source: osm
+            layer: earth
         draw:
             polygons:
                 order: function() { return feature.sort_key; }
-                color: '#ddeeee'
+                color: [0.175, 0.175, 0.175]
 
     landuse:
-        data: { source: osm }
+        data:
+            source: osm
+            layer: landuse
         draw:
             polygons:
                 order: function() { return feature.sort_key; }
-                color: '#aaffaa'
+                color: [0.5, 0.875, 0.5]
+        pitch:
+            filter:
+                kind: ['pitch', 'garden', 'playground']
+            draw:
+                polygons:
+                    color: [0.3, 0.675, 0.3]
 
     water:
-        data: { source: osm }
+        data:
+            source: osm
+            layer: water
         draw:
             polygons:
                 order: function() { return feature.sort_key; }
-                color: '#88bbee'
+                color: [0.5, 0.5, 0.875]
+        outline:
+            # don't draw outlines on ocean or riverbank features
+            filter: {not: {kind: [ocean, river, riverbank]}}
+            draw:
+                lines:
+                    color: [0.6, 0.6, 0.975]
+                    order: function() { return feature.sort_key; }
+                    width: function () {
+                            return (
+                                $zoom >= 16 && (2.5 * Math.log($zoom))
+                            );
+                        }
 
     roads:
-        data: { source: osm }
-        filter:
-            not: { kind: ["path", "rail"] }
+        data:
+            source: osm
+            layer: roads
         draw:
             lines:
-                order: function() { return feature.sort_key; }
-                color: gray
-                width: 8
-                cap: round
+                order: function () { return feature.sort_key; }
+                outline:
+                    color: [0.7, 0.7, 0.7]
+                    width: 1
         highway:
-            filter:
-                kind: highway
+            filter: { kind: highway }
             draw:
                 lines:
-                    order: function() { return feature.sort_key; }
-                    color: '#cc6666'
-                    width: 12
-                    outline:
-                        color: grey
-                        width: 1.5
-        minor_road:
-            filter:
-                kind: minor_road
+                    color: [1.0, 1.0, 1.0]
+                    width: 9
+            tunnel:
+                filter: { is_tunnel: yes }
+                draw:
+                    lines:
+                        color: '#333'
+                        width: 6
+                        outline:
+                            order: 352 # magic number
+                            color: white
+                            width: 1
+        major_road:
+            filter: { kind: major_road }
             draw:
                 lines:
-                    order: function() { return feature.sort_key; }
-                    color: lightgrey
+                    color: [0.5, 0.5, 0.5]
                     width: 5
+        minor_road:
+            filter: { kind: minor_road }
+            draw:
+                lines:
+                    color: [0.65, 0.65, 0.65]
+                    width: 4
+        path:
+            filter:
+               kind: path
+            draw:
+                lines:
+                    color: [0.8, 0.8, 0.8]
+                    width: 3
+        rail:
+            filter:
+                kind: rail
+                not: { is_tunnel: yes }
+            draw:
+                lines:
+                    color: [0.5, 0.0, 0.0]
+                    width: 3
+                    outline:
+                        order: 352 # magic number
+                        width: .5
+
 
     buildings:
         data: { source: osm }
         draw:
             polygons:
                 order: function() { return feature.sort_key; }
-                color: '#fff'
-
-        extruded:
+                color: [.6, .6, .6]
+                # at z15, only extrude buildings over 5 m; at z16 and higher, extrude all buildings
+                extrude: function () { return (($zoom >= 15 && feature.height > 5) || $zoom >= 16) }
+        # buildings with a name only
+        namedBuildings:
+            filter: { name: true }
             draw:
                 polygons:
-                    style: buildings
-                    extrude: function () { return feature.height > 0 || $zoom >= 16; }
-
+                    color: [.6, .2, .2]
+            # buildings with a name and a kind
+            namedKindBuildings:
+                filter: { kind: true }
+                draw:
+                    polygons:
+                        color: [.6, .2, .6]
+        # buildings with a kind only
+        kindBuildings:
+            filter: { name: false, kind: true }
+            draw:
+                polygons:
+                    color: [.2, .2, .6]
     road_labels:
         data: { source: osm, layer: roads }
         filter: { name: true, aeroway: false, tunnel: false, railway: false, not: { kind: [rail, ferry] } }
