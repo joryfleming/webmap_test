@@ -61,10 +61,11 @@ sources:
     osm:
         type: TopoJSON
         url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-rKpnpkD
-        max_zoom: 16
+        max_zoom: 17
     NOAA:
         type: GeoJSON
         url: http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer
+        max_zoom: 17
 
 layers:
     buildings:
