@@ -8,11 +8,19 @@ cameras:
         type: isometric
         axis: [0,1]
 lights:
-    key:
+    directional1:
         type: directional
-        direction: [-.2, 1, -.1]
-        diffuse: 1
-        ambient: .6
+        direction: [0.293,-0.861,-0.415]
+        ambient: .5
+        diffuse: .9
+        specular: 1.
+    point1:
+        type: point
+        position: [0, -100, 0px]
+        origin: ground
+        ambient: .2
+        diffuse: .2
+        specular: .5
 styles:
     windows:
         url: styles/windows.yaml
