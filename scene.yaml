@@ -3,7 +3,7 @@ cameras:
         type: perspective
         #focal_length: 1
         focal_length: [[16, 2], [17, 2.5], [18, 3], [19, 4], [20, 6]] # pairs of [zoom, focal len]
-        vanishing_point: [0, -1000] # relative to center of screen, in pixels
+        vanishing_point: [-250, -250] # relative to center of screen, in pixels
     #isometric:
     #    type: isometric
     #    axis: [0,1]
@@ -13,6 +13,7 @@ lights:
             direction: [-.2, 1, -1]
             diffuse: 1
             ambient: .6
+            visible: true
     directional1:
         type: directional
         direction: [0.293,-0.861,-0.415]
@@ -45,10 +46,11 @@ sources:
     osm:
         type: TopoJSON
         url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-rKpnpkD
-        max_zoom: 16
+        max_zoom: 17
     NOAA:
         type: GeoJSON
         url: http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer
+        max_zoom: 17
 
 layers:
     slr:
