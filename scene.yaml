@@ -33,24 +33,7 @@ styles:
     # Shaders Demo
     windows:
         url: styles/windows.yaml
-    # Tilt Demo
-    geometry-tilt:
-        url: styles/geometry-tilt.yaml
-    geometry-normal:
-        url: styles/geometry-normal.yaml
-    generative-random:
-        url: styles/generative-random.yaml
-    generative-noise:
-        url: styles/generative-noise.yaml
-    generative-fbm:
-        url: styles/generative-fbm.yaml
-    filter-grain:
-        url: styles/filter-grain.yaml
-    buildings:
-        url: styles/buildings.yaml
-    offices:
-        url: styles/offices.yaml
-
+   
     basic-buildings:
         base: polygons
         shaders:
@@ -61,10 +44,11 @@ sources:
     osm:
         type: TopoJSON
         url:  https://vector.mapzen.com/osm/all/{z}/{x}/{y}.topojson?api_key=vector-tiles-rKpnpkD
-        max_zoom: 16
+        max_zoom: 17
     NOAA:
         type: GeoJSON
         url: http://csc-s-gis1-d:6080/arcgis/rest/services/Test/MA/MapServer
+        max_zoom: 17
 
 layers:
     buildings:

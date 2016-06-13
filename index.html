@@ -39,27 +39,22 @@
       opacity: 0.7
     });
 
-  var map = L.map('map'),{
-    center: [42.364423, -71.055261], 
-    zoom: 16,
-    layers: [osm, slr]
-  });
+    var map = L.map('map',{
+      center: [42.364423, -71.055261], 
+      zoom: 16,
+      layers: [osm, slr]
+    });
   
-  var baseMaps = {
-    "Open Street Map": osm
-  };
+    var baseMaps = {
+      "Open Street Map": osm
+    };
   
-  var overlayMaps = {
-    "Sea Level Rise 6ft": slr
-  };
+    var overlayMaps = {
+      "Sea Level Rise 6ft": slr
+    };
   
-  L.control.layers(baseMaps, overlayMaps).addTo(map);
-  
-  L.esri.dynamicMapLayer({
-    url: 'http://maps5.arcgisonline.com/ArcGIS/rest/services/review/Woods_Hole_US_Biomass/MapServer/5',
-    opacity: 0.8
-  }).addTo(map);
-  
+    L.control.layers(baseMaps, overlayMaps).addTo(map);
+    
   </script>
 
   <!-- Adding a script block to post message to the parent container (think iframed demos) -->
@@ -77,5 +72,6 @@
       repo: 'https://github.com/tangrams/tangram'
     });
   </script>
+
 </body>
 </html>
